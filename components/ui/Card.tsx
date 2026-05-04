@@ -1,43 +1,44 @@
-import { View, StyleSheet, type ViewProps } from 'react-native'
-import { SURFACE, BORDER } from '@/lib/theme'
+import React from 'react'
+import { View, StyleSheet, type ViewStyle } from 'react-native'
+import { BG_SURFACE, BORDER_DEFAULT, ACCENT_GLOW } from '@/lib/theme'
 
-interface CardProps extends ViewProps {
-  /** Tighter padding */
-  compact?: boolean
+interface CardProps {
+  children: React.ReactNode
+  style?: ViewStyle
+  glow?: boolean
 }
 
 /**
- * Generic container card.
- * Use as a surface for list items, form sections, info panels, etc.
+ * Dark surface card with optional gold glow.
  */
-export function Card({ compact, style, children, ...rest }: CardProps) {
+export function Card({ children, style, glow = false }: CardProps) {
   return (
     <View
       style={[
-        styles.card,
-        compact ? styles.compact : styles.normal,
+        s.card,
+        glow && s.glow,
         style,
       ]}
-      {...rest}
     >
       {children}
     </View>
   )
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   card: {
-    backgroundColor:  SURFACE,
-    borderRadius:     16,
-    borderWidth:      StyleSheet.hairlineWidth,
-    borderColor:      BORDER,
-    // Subtle elevation
-    shadowColor:      '#000',
-    shadowOffset:     { width: 0, height: 2 },
-    shadowOpacity:    0.25,
-    shadowRadius:     6,
-    elevation:        3,
+    backgroundColor: BG_SURFACE,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: BORDER_DEFAULT,
+    padding: 16,
   },
-  normal:  { padding: 16 },
-  compact: { padding: 10 },
+  glow: {
+    borderColor: ACCENT_GLOW,
+    shadowColor: '#C9A84C',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 4,
+  },
 })

@@ -1,29 +1,29 @@
 {
   "expo": {
-    "name": "MyApp",
-    "slug": "my-app",
+    "name": "Velvet",
+    "slug": "velvet",
     "version": "1.0.0",
     "orientation": "portrait",
-    "scheme": "myapp",
+    "scheme": "velvet",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#0d0d0d"
+      "backgroundColor": "#0A0A0A"
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.yourcompany.myapp",
+      "bundleIdentifier": "com.yourcompany.velvet",
       "associatedDomains": [
         "applinks:REPLACE_WITH_YOUR_DOMAIN"
       ]
     },
     "android": {
-      "package": "com.yourcompany.myapp",
+      "package": "com.yourcompany.velvet",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#0d0d0d"
+        "backgroundColor": "#0A0A0A"
       },
       "permissions": [
         "android.permission.CAMERA",
@@ -32,17 +32,14 @@
       ],
       "androidStatusBar": {
         "barStyle": "light-content",
-        "backgroundColor": "#0d0d0d",
+        "backgroundColor": "#0A0A0A",
         "translucent": true
       },
-      "predictiveBackGestureEnabled": false,
       "intentFilters": [
         {
           "action": "VIEW",
           "autoVerify": true,
-          "data": [
-            { "scheme": "myapp" }
-          ],
+          "data": [{ "scheme": "velvet" }],
           "category": ["BROWSABLE", "DEFAULT"]
         }
       ]
@@ -53,26 +50,21 @@
     "plugins": [
       "expo-router",
       "expo-image",
-      [
-        "expo-splash-screen",
-        {
-          "backgroundColor": "#0d0d0d",
-          "image": "./assets/splash-icon.png",
-          "imageWidth": 200
-        }
-      ],
+      ["expo-splash-screen", {
+        "backgroundColor": "#0A0A0A",
+        "image": "./assets/splash-icon.png",
+        "imageWidth": 200
+      }],
       "expo-secure-store",
       "expo-localization",
       "expo-font",
-      [
-        "@sentry/react-native/expo",
-        {
-          "url": "https://sentry.io/",
-          "project": "react-native",
-          "organization": "your-org"
-        }
-      ],
-      "@sentry/react-native"
+      ["@sentry/react-native/expo", {
+        "url": "https://sentry.io/",
+        "project": "velvet",
+        "organization": "REPLACE_WITH_YOUR_SENTRY_ORG"
+      }],
+      "@sentry/react-native",
+      "expo-sharing"
     ],
     "extra": {
       "router": {},

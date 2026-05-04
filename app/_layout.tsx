@@ -21,12 +21,15 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 import { useFonts } from 'expo-font'
 import {
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  Inter_800ExtraBold,
-} from '@expo-google-fonts/inter'
+  PlayfairDisplay_400Regular,
+  PlayfairDisplay_400Regular_Italic,
+  PlayfairDisplay_700Bold,
+} from '@expo-google-fonts/playfair-display'
+import {
+  DMSans_400Regular,
+  DMSans_500Medium,
+  DMSans_700Bold,
+} from '@expo-google-fonts/dm-sans'
 import { ThemeProvider, DarkTheme } from '@react-navigation/native'
 import { PostHogProvider } from 'posthog-react-native'
 import { I18nextProvider } from 'react-i18next'
@@ -118,11 +121,12 @@ function ScreenTracker() {
 function RootLayout() {
   const navigationRef = useNavigationContainerRef()
   const [fontsLoaded] = useFonts({
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-    Inter_800ExtraBold,
+    PlayfairDisplay_400Regular,
+    PlayfairDisplay_400Regular_Italic,
+    PlayfairDisplay_700Bold,
+    DMSans_400Regular,
+    DMSans_500Medium,
+    DMSans_700Bold,
   })
 
   // null = still checking; true/false = auth state known
@@ -218,7 +222,7 @@ function RootLayout() {
           <SubscriptionProvider>
             <ToastProvider>
             <SafeAreaProvider>
-              <GestureHandlerRootView style={{ flex: 1, backgroundColor: BG }}>
+              <GestureHandlerRootView style={{ flex: 1, backgroundColor: BG, minHeight: Platform.OS === 'web' ? '100vh' : undefined } as any}>
                 <BottomSheetModalProvider>
                   <StatusBar
                     style="light"
@@ -226,7 +230,7 @@ function RootLayout() {
                     backgroundColor={Platform.OS === 'android' ? BG : undefined}
                   />
                   <ThemeProvider value={customDarkTheme}>
-                    <View style={{ flex: 1, backgroundColor: BG }}>
+                    <View style={{ flex: 1, backgroundColor: BG, minHeight: Platform.OS === 'web' ? '100vh' : undefined } as any}>
                       <Stack ref={navigationRef} screenOptions={{ headerShown: false, animation: 'fade', contentStyle: { backgroundColor: BG } }}>
 
                         {/* ── Unauthenticated screens ──────────────────────────────────
@@ -236,6 +240,7 @@ function RootLayout() {
                         <Stack.Protected guard={!isAuthed}>
                           <Stack.Screen name="index" />
                           <Stack.Screen name="(auth)" />
+                          <Stack.Screen name="apply" />
                         </Stack.Protected>
 
                         {/* ── Onboarding screens ───────────────────────────────────────
@@ -248,14 +253,16 @@ function RootLayout() {
                         Accessible only when signed in + onboarding done. */}
                         <Stack.Protected guard={!!isAuthed && onboardingCompleted === true}>
                           <Stack.Screen name="(tabs)" />
-                          <Stack.Screen name="detail/[id]" />
-                          <Stack.Screen name="settings" />
-                          <Stack.Screen name="support" />
+                          <Stack.Screen name="admin" />
+                          <Stack.Screen name="member/[id]" options={{ animation: 'slide_from_right' }} />
+                          <Stack.Screen name="event/[id]" options={{ animation: 'slide_from_right' }} />
+                          <Stack.Screen name="messages/[id]" options={{ animation: 'slide_from_right' }} />
+                          <Stack.Screen name="invites" />
+                          <Stack.Screen name="notifications" />
+                          <Stack.Screen name="profile/edit" options={{ animation: 'slide_from_right' }} />
                         </Stack.Protected>
 
-                        {/* ── Always-public screens — declared LAST so they don't become
-                        the default redirect target when a protected group flips. ── */}
-                        <Stack.Screen name="upgrade" />
+                        {/* ── Always-public screens ── */}
                         <Stack.Screen name="privacy" />
                         <Stack.Screen name="terms" />
                       </Stack>

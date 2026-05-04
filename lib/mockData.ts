@@ -1,256 +1,256 @@
 /**
- * Mock / placeholder data for the template.
- *
- * Replace these with real API calls once you wire up your backend.
- * The data is intentionally generic so this template works for any app type.
- *
- * Every screen reads from here — swap these exports with your data layer
- * and the UI stays intact.
+ * Velvet mock data — used as placeholderData in TanStack Query hooks.
+ * Screens must never flash empty on first load.
  */
+import type { Profile, Application, Event, Conversation, Message, Invite, Notification } from '@/types'
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// ─── PROFILES / MEMBERS ───────────────────────────────────────────────────────
 
-export type ItemStatus = 'active' | 'pending' | 'archived'
-export type TaskState = 'todo' | 'in-progress' | 'review' | 'done'
-export type TaskPriority = 'low' | 'medium' | 'high'
-
-export type ItemSummary = {
-    id: string
-    name: string
-    owner: string
-    status: ItemStatus
-    completion: number
-    health: number
-    activeUsers: number
-    updatedAt: string
-    summary: string
-}
-
-export type TaskItem = {
-    id: string
-    itemId: string
-    title: string
-    state: TaskState
-    priority: TaskPriority
-    dueDate: string
-}
-
-export type ActivityItem = {
-    id: string
-    itemId: string
-    kind: 'milestone' | 'comment' | 'alert' | 'review'
-    title: string
-    detail: string
-    timeAgo: string
-}
-
-export type NotificationItem = {
-    id: string
-    title: string
-    body: string
-    timeAgo: string
-    category: 'billing' | 'system' | 'product' | 'team'
-    read: boolean
-}
-
-export type FaqItem = {
-    id: string
-    question: string
-    answer: string
-}
-
-// ─── Demo user ────────────────────────────────────────────────────────────────
-
-export const demoUser = {
-    fullName: 'Avery Quinn',
-    email: 'avery.quinn@example.com',
-    role: 'Admin',
-    teamName: 'My Team',
-    initials: 'AQ',
-}
-
-// ─── Items (generic placeholder data) ─────────────────────────────────────────
-
-export const itemSummaries: ItemSummary[] = [
-    {
-        id: 'item-1',
-        name: 'Project Alpha',
-        owner: 'Avery Quinn',
-        status: 'active',
-        completion: 82,
-        health: 91,
-        activeUsers: 18,
-        updatedAt: '2h ago',
-        summary: 'Progress is on track with all milestones ahead of schedule.',
-    },
-    {
-        id: 'item-2',
-        name: 'Project Beta',
-        owner: 'Maya Park',
-        status: 'pending',
-        completion: 61,
-        health: 68,
-        activeUsers: 11,
-        updatedAt: '45m ago',
-        summary: 'Waiting on review feedback before moving to the next phase.',
-    },
-    {
-        id: 'item-3',
-        name: 'Project Gamma',
-        owner: 'Noah Reed',
-        status: 'archived',
-        completion: 100,
-        health: 54,
-        activeUsers: 9,
-        updatedAt: '5h ago',
-        summary: 'Completed and archived. All deliverables have been submitted.',
-    },
-    {
-        id: 'item-4',
-        name: 'Project Delta',
-        owner: 'Lena Kim',
-        status: 'active',
-        completion: 74,
-        health: 88,
-        activeUsers: 14,
-        updatedAt: '1d ago',
-        summary: 'Core implementation complete, polishing remaining details.',
-    },
+export const mockMembers: Profile[] = [
+  {
+    id: 'mock-member-1', email: 'alexandra@sequoia.com', display_name: 'Alexandra Chen',
+    avatar_url: null, city: 'San Francisco', profession: 'Venture Capitalist',
+    company: 'Sequoia Capital', linkedin_url: 'https://linkedin.com/in/alexandrachen',
+    instagram_handle: 'alexandra.chen',
+    bio: 'Early-stage investor focused on consumer and fintech. Previously founded two companies (one exit). Lover of good wine and worse jokes.',
+    role: 'member', invite_code: 'ALEX1234', invited_by: null, invite_count: 2,
+    is_online: true, last_seen_at: new Date().toISOString(), onboarding_completed: true,
+    created_at: new Date(Date.now() - 30 * 86400000).toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'mock-member-2', email: 'marcus@variant.fund', display_name: 'Marcus Webb',
+    avatar_url: null, city: 'New York', profession: 'Founder', company: 'Variant Fund',
+    linkedin_url: 'https://linkedin.com/in/marcuswebb', instagram_handle: 'marcuswebb',
+    bio: 'Building the next layer of financial infrastructure. Marathon runner. Obsessed with Ethiopian coffee.',
+    role: 'member', invite_code: 'MARC5678', invited_by: 'mock-member-1', invite_count: 1,
+    is_online: false, last_seen_at: new Date(Date.now() - 7200000).toISOString(),
+    onboarding_completed: true,
+    created_at: new Date(Date.now() - 21 * 86400000).toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'mock-member-3', email: 'priya@designstudio.io', display_name: 'Priya Sharma',
+    avatar_url: null, city: 'London', profession: 'Creative Director', company: 'Studio Eight',
+    linkedin_url: null, instagram_handle: 'priya.makes',
+    bio: 'Design director by day, ceramicist by weekend. Obsessed with the intersection of craft and technology.',
+    role: 'member', invite_code: 'PRIY9012', invited_by: null, invite_count: 3,
+    is_online: true, last_seen_at: new Date().toISOString(), onboarding_completed: true,
+    created_at: new Date(Date.now() - 14 * 86400000).toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'mock-member-4', email: 'james@manifold.xyz', display_name: 'James Okafor',
+    avatar_url: null, city: 'Lagos', profession: 'Entrepreneur', company: 'Manifold',
+    linkedin_url: 'https://linkedin.com/in/jamesokafor', instagram_handle: 'james.okafor',
+    bio: "Building Africa's next consumer platform. Previously scaled ops at Stripe. Part-time philosopher.",
+    role: 'member', invite_code: 'JAME3456', invited_by: 'mock-member-2', invite_count: 0,
+    is_online: false, last_seen_at: new Date(Date.now() - 18000000).toISOString(),
+    onboarding_completed: true,
+    created_at: new Date(Date.now() - 7 * 86400000).toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'mock-member-5', email: 'sofia@architects.com', display_name: 'Sofia Reyes',
+    avatar_url: null, city: 'Mexico City', profession: 'Architect', company: 'Reyes & Partners',
+    linkedin_url: 'https://linkedin.com/in/sofiareyes', instagram_handle: 'sofia.builds',
+    bio: 'Designing spaces that outlast trends. Studio based between Mexico City and Madrid. Dog mom.',
+    role: 'member', invite_code: 'SOFI7890', invited_by: 'mock-member-3', invite_count: 2,
+    is_online: true, last_seen_at: new Date().toISOString(), onboarding_completed: true,
+    created_at: new Date(Date.now() - 3 * 86400000).toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'mock-member-6', email: 'theo@signal.vc', display_name: 'Theo Nakamura',
+    avatar_url: null, city: 'Tokyo', profession: 'Investor', company: 'Signal Ventures',
+    linkedin_url: 'https://linkedin.com/in/theonakamura', instagram_handle: null,
+    bio: 'Seed investor in climatetech and deep tech. Spent 5 years in academia before finance. Kendo practitioner.',
+    role: 'member', invite_code: 'THEO2345', invited_by: null, invite_count: 3,
+    is_online: false, last_seen_at: new Date(Date.now() - 86400000).toISOString(),
+    onboarding_completed: true,
+    created_at: new Date(Date.now() - 45 * 86400000).toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'mock-member-7', email: 'nina@haus.media', display_name: 'Nina Volkov',
+    avatar_url: null, city: 'Berlin', profession: 'Journalist', company: 'Haus Media',
+    linkedin_url: 'https://linkedin.com/in/ninavolkov', instagram_handle: 'nina.writes',
+    bio: 'Covering culture, power, and the places they intersect. Bylines in NYT, The Atlantic, Wired.',
+    role: 'member', invite_code: 'NINA6789', invited_by: 'mock-member-1', invite_count: 1,
+    is_online: false, last_seen_at: new Date(Date.now() - 1800000).toISOString(),
+    onboarding_completed: true,
+    created_at: new Date(Date.now() - 10 * 86400000).toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'mock-member-8', email: 'cai@wei.co', display_name: 'Cai Wei',
+    avatar_url: null, city: 'Singapore', profession: 'Product Lead', company: 'Grab',
+    linkedin_url: 'https://linkedin.com/in/caiwei', instagram_handle: 'cai.wei',
+    bio: "Leading product for Southeast Asia's largest super-app. Chess player, dim sum enthusiast.",
+    role: 'member', invite_code: 'CAIW0123', invited_by: 'mock-member-4', invite_count: 2,
+    is_online: true, last_seen_at: new Date().toISOString(), onboarding_completed: true,
+    created_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+    updated_at: new Date().toISOString(),
+  },
 ]
 
-export const insightCards = [
-    { id: 'metric-1', label: 'Total Items', value: '24', delta: '+3 this week' },
-    { id: 'metric-2', label: 'Completion', value: '78%', delta: '+2.1%' },
-    { id: 'metric-3', label: 'Active Users', value: '41', delta: '+5 today' },
+// ─── EVENTS ───────────────────────────────────────────────────────────────────
+
+export const mockEvents: Event[] = [
+  {
+    id: 'mock-event-1', title: 'Velvet Rooftop Mixer — New York',
+    description: "An intimate evening on The Standard's rooftop. Cocktails, conversations, and the Manhattan skyline. Limited to 40 members.",
+    event_type: 'in_person', location: 'The Standard, High Line',
+    address: '848 Washington St, New York, NY 10014', virtual_link: null,
+    cover_image_url: null, starts_at: new Date(Date.now() + 7 * 86400000).toISOString(),
+    ends_at: new Date(Date.now() + 7 * 86400000 + 10800000).toISOString(),
+    capacity: 40, rsvp_count: 23, is_published: true, created_by: 'mock-admin-1',
+    created_at: new Date(Date.now() - 5 * 86400000).toISOString(),
+  },
+  {
+    id: 'mock-event-2', title: 'Fireside: The Future of Taste',
+    description: 'A virtual conversation with founders redefining how we eat, drink, and experience food. Q&A to follow.',
+    event_type: 'virtual', location: 'Zoom', address: null,
+    virtual_link: 'https://zoom.us/j/velvet-fireside', cover_image_url: null,
+    starts_at: new Date(Date.now() + 3 * 86400000).toISOString(),
+    ends_at: new Date(Date.now() + 3 * 86400000 + 5400000).toISOString(),
+    capacity: null, rsvp_count: 61, is_published: true, created_by: 'mock-admin-1',
+    created_at: new Date(Date.now() - 10 * 86400000).toISOString(),
+  },
+  {
+    id: 'mock-event-3', title: 'London Gallery Walk — Mayfair',
+    description: 'Private access to three Mayfair galleries followed by dinner at Gymkhana. Members only.',
+    event_type: 'in_person', location: 'Mayfair, London',
+    address: 'Meet at Gagosian, 17-19 Davies St, London W1K 3JP', virtual_link: null,
+    cover_image_url: null, starts_at: new Date(Date.now() + 14 * 86400000).toISOString(),
+    ends_at: null, capacity: 20, rsvp_count: 12, is_published: true,
+    created_by: 'mock-admin-1', created_at: new Date(Date.now() - 3 * 86400000).toISOString(),
+  },
+  {
+    id: 'mock-event-4', title: 'Office Hours: Ask a VC Anything',
+    description: 'Open Q&A with three investors across consumer, fintech, and deep tech. No pitches — just honest conversation.',
+    event_type: 'virtual', location: 'Zoom', address: null,
+    virtual_link: 'https://zoom.us/j/velvet-officehours', cover_image_url: null,
+    starts_at: new Date(Date.now() + 21 * 86400000).toISOString(),
+    ends_at: new Date(Date.now() + 21 * 86400000 + 3600000).toISOString(),
+    capacity: null, rsvp_count: 38, is_published: true, created_by: 'mock-admin-1',
+    created_at: new Date().toISOString(),
+  },
 ]
 
-// ─── Tasks ────────────────────────────────────────────────────────────────────
+// ─── CONVERSATIONS ────────────────────────────────────────────────────────────
 
-export const taskItems: TaskItem[] = [
-    { id: 'task-1', itemId: 'item-1', title: 'Finalize design specs', state: 'review', priority: 'high', dueDate: 'Today' },
-    { id: 'task-2', itemId: 'item-1', title: 'Fix reported issues', state: 'in-progress', priority: 'high', dueDate: 'Tomorrow' },
-    { id: 'task-3', itemId: 'item-2', title: 'Update documentation', state: 'todo', priority: 'medium', dueDate: 'Mon' },
-    { id: 'task-4', itemId: 'item-2', title: 'Run integration tests', state: 'in-progress', priority: 'medium', dueDate: 'Tue' },
-    { id: 'task-5', itemId: 'item-3', title: 'Prepare release notes', state: 'todo', priority: 'high', dueDate: 'Today' },
-    { id: 'task-6', itemId: 'item-4', title: 'Publish changelog', state: 'done', priority: 'low', dueDate: 'Done' },
-    { id: 'task-7', itemId: 'item-4', title: 'Review pull requests', state: 'review', priority: 'low', dueDate: 'Fri' },
+export const mockConversations: Conversation[] = [
+  {
+    id: 'mock-conv-1', member_1_id: 'current-user-id', member_2_id: 'mock-member-1',
+    last_message: 'Would love to connect at the NY mixer!',
+    last_message_at: new Date(Date.now() - 1200000).toISOString(),
+    created_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+    other_member: mockMembers[0], unread_count: 1,
+  },
+  {
+    id: 'mock-conv-2', member_1_id: 'mock-member-3', member_2_id: 'current-user-id',
+    last_message: 'The ceramics studio opens next month — you should come.',
+    last_message_at: new Date(Date.now() - 10800000).toISOString(),
+    created_at: new Date(Date.now() - 5 * 86400000).toISOString(),
+    other_member: mockMembers[2], unread_count: 0,
+  },
+  {
+    id: 'mock-conv-3', member_1_id: 'current-user-id', member_2_id: 'mock-member-7',
+    last_message: 'Read your Atlantic piece. Outstanding.',
+    last_message_at: new Date(Date.now() - 86400000).toISOString(),
+    created_at: new Date(Date.now() - 8 * 86400000).toISOString(),
+    other_member: mockMembers[6], unread_count: 0,
+  },
 ]
 
-// ─── Activity feed ────────────────────────────────────────────────────────────
+// ─── MESSAGES ─────────────────────────────────────────────────────────────────
 
-export const activityItems: ActivityItem[] = [
-    {
-        id: 'act-1',
-        itemId: 'item-1',
-        kind: 'milestone',
-        title: 'Phase 2 completed',
-        detail: 'All planned deliverables were submitted on time.',
-        timeAgo: '22m ago',
-    },
-    {
-        id: 'act-2',
-        itemId: 'item-2',
-        kind: 'comment',
-        title: 'New feedback received',
-        detail: 'Team requested changes to the layout before final review.',
-        timeAgo: '1h ago',
-    },
-    {
-        id: 'act-3',
-        itemId: 'item-3',
-        kind: 'alert',
-        title: 'Deadline approaching',
-        detail: 'The upcoming milestone is due within the next 48 hours.',
-        timeAgo: '2h ago',
-    },
-    {
-        id: 'act-4',
-        itemId: 'item-4',
-        kind: 'review',
-        title: 'Review approved',
-        detail: 'Quality checks and acceptance criteria have been met.',
-        timeAgo: '5h ago',
-    },
+export const mockMessages: Message[] = [
+  { id: 'mock-msg-1', conversation_id: 'mock-conv-1', sender_id: 'current-user-id',
+    content: "Hey Alexandra — just joined Velvet. Love what you're building at Sequoia.",
+    is_read: true, created_at: new Date(Date.now() - 2 * 86400000).toISOString() },
+  { id: 'mock-msg-2', conversation_id: 'mock-conv-1', sender_id: 'mock-member-1',
+    content: 'Welcome! Great to have you here. Are you based in SF?',
+    is_read: true, created_at: new Date(Date.now() - 2 * 86400000 + 600000).toISOString() },
+  { id: 'mock-msg-3', conversation_id: 'mock-conv-1', sender_id: 'current-user-id',
+    content: 'NYC actually. Are you coming to the rooftop mixer?',
+    is_read: true, created_at: new Date(Date.now() - 86400000).toISOString() },
+  { id: 'mock-msg-4', conversation_id: 'mock-conv-1', sender_id: 'mock-member-1',
+    content: 'Would love to connect at the NY mixer!',
+    is_read: false, created_at: new Date(Date.now() - 1200000).toISOString() },
 ]
 
-// ─── Notifications ────────────────────────────────────────────────────────────
+// ─── APPLICATIONS ─────────────────────────────────────────────────────────────
 
-export const notificationItems: NotificationItem[] = [
-    {
-        id: 'notif-1',
-        title: 'New item assigned',
-        body: 'You have been assigned a new item to review.',
-        timeAgo: '12m ago',
-        category: 'product',
-        read: false,
-    },
-    {
-        id: 'notif-2',
-        title: 'Team member joined',
-        body: 'Taylor has joined your team as an editor.',
-        timeAgo: '58m ago',
-        category: 'team',
-        read: false,
-    },
-    {
-        id: 'notif-3',
-        title: 'Scheduled maintenance',
-        body: 'The system will undergo maintenance Saturday at 02:00 UTC.',
-        timeAgo: '3h ago',
-        category: 'system',
-        read: true,
-    },
-    {
-        id: 'notif-4',
-        title: 'New version available',
-        body: 'Version 2.0 adds new features and performance improvements.',
-        timeAgo: '1d ago',
-        category: 'product',
-        read: true,
-    },
+export const mockApplications: Application[] = [
+  {
+    id: 'mock-app-1', user_id: 'mock-applicant-1', email: 'dan@techco.io',
+    full_name: 'Daniel Park', city: 'Seoul', profession: 'Software Engineer', company: 'Kakao',
+    linkedin_url: 'https://linkedin.com/in/danielpark', instagram_handle: 'dan.park',
+    why_join: "I've been building in the consumer space for 8 years and I'm looking for a community of peers who think differently about what products can be. Velvet seems like the rare circle where depth of conversation is valued over breadth of followers.",
+    referral_code: 'ALEX1234', status: 'pending', admin_notes: null,
+    reviewed_by: null, reviewed_at: null,
+    created_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+  },
+  {
+    id: 'mock-app-2', user_id: 'mock-applicant-2', email: 'fatima@lawgroup.com',
+    full_name: 'Fatima Al-Rashid', city: 'Dubai', profession: 'Corporate Lawyer',
+    company: 'Al-Rashid & Associates', linkedin_url: 'https://linkedin.com/in/fatimaalrashid',
+    instagram_handle: null,
+    why_join: "I work at the intersection of international law and emerging technology. I'm looking for a space to connect with founders and operators who are thinking seriously about the next decade of business — not just the next funding round.",
+    referral_code: null, status: 'pending', admin_notes: null,
+    reviewed_by: null, reviewed_at: null,
+    created_at: new Date(Date.now() - 86400000).toISOString(),
+  },
+  {
+    id: 'mock-app-3', user_id: 'mock-applicant-3', email: 'leo@studio.art',
+    full_name: 'Leo Fontaine', city: 'Paris', profession: 'Artist', company: 'Independent',
+    linkedin_url: null, instagram_handle: 'leo.fontaine.art',
+    why_join: "My practice sits at the intersection of fine art and digital media. I'm not looking for another social platform — I'm looking for a curated group of interesting people across disciplines. The Velvet brief resonates with how I want to spend my energy.",
+    referral_code: 'PRIY9012', status: 'pending', admin_notes: null,
+    reviewed_by: null, reviewed_at: null,
+    created_at: new Date(Date.now() - 14400000).toISOString(),
+  },
 ]
 
-// ─── Support FAQ ──────────────────────────────────────────────────────────────
+// ─── INVITES ──────────────────────────────────────────────────────────────────
 
-export const supportFaq: FaqItem[] = [
-    {
-        id: 'faq-1',
-        question: 'Can I use this template without external services?',
-        answer: 'Yes. The app ships with mock data and works as a full demo before wiring real APIs.',
-    },
-    {
-        id: 'faq-2',
-        question: 'How do I swap mock data for real APIs?',
-        answer: 'Replace reads from lib/mockData.ts with your API adapter methods while keeping screen UI intact.',
-    },
-    {
-        id: 'faq-3',
-        question: 'Where should legal copy live?',
-        answer: 'Use the privacy and terms routes as placeholders until your final policy documents are ready.',
-    },
+export const mockInvites: Invite[] = [
+  { id: 'mock-invite-1', code: 'VLVT1234', created_by: 'current-user-id',
+    used_by: 'mock-member-7', used_at: new Date(Date.now() - 10 * 86400000).toISOString(),
+    expires_at: null, created_at: new Date(Date.now() - 20 * 86400000).toISOString(),
+    used_by_profile: mockMembers[6] },
+  { id: 'mock-invite-2', code: 'VLVT5678', created_by: 'current-user-id',
+    used_by: null, used_at: null, expires_at: null,
+    created_at: new Date(Date.now() - 5 * 86400000).toISOString() },
+  { id: 'mock-invite-3', code: 'VLVT9012', created_by: 'current-user-id',
+    used_by: null, used_at: null, expires_at: null,
+    created_at: new Date(Date.now() - 86400000).toISOString() },
 ]
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// ─── NOTIFICATIONS ────────────────────────────────────────────────────────────
 
-export function getItemById(itemId?: string | string[]) {
-    if (!itemId || Array.isArray(itemId)) return null
-    return itemSummaries.find((item) => item.id === itemId) ?? null
-}
+export const mockNotifications: Notification[] = [
+  { id: 'mock-notif-1', user_id: 'current-user-id', type: 'new_member',
+    title: 'New member joined', body: 'Cai Wei from Singapore just joined the circle.',
+    data: { member_id: 'mock-member-8' }, is_read: false,
+    created_at: new Date(Date.now() - 7200000).toISOString() },
+  { id: 'mock-notif-2', user_id: 'current-user-id', type: 'event_reminder',
+    title: 'Rooftop Mixer in 48 hours', body: 'The NY mixer is coming up. 23 members are going.',
+    data: { event_id: 'mock-event-1' }, is_read: false,
+    created_at: new Date(Date.now() - 5 * 86400000 + 3600000).toISOString() },
+  { id: 'mock-notif-3', user_id: 'current-user-id', type: 'invite_accepted',
+    title: 'Your invite was accepted', body: 'Nina Volkov joined using your invite code.',
+    data: { member_id: 'mock-member-7' }, is_read: true,
+    created_at: new Date(Date.now() - 10 * 86400000).toISOString() },
+]
 
-export function getItemTasks(itemId?: string | string[]) {
-    if (!itemId || Array.isArray(itemId)) return []
-    return taskItems.filter((task) => task.itemId === itemId)
-}
+// ─── ADMIN STATS ──────────────────────────────────────────────────────────────
 
-export function statusLabel(status: ItemStatus) {
-    switch (status) {
-        case 'active':
-            return 'Active'
-        case 'pending':
-            return 'Pending'
-        case 'archived':
-            return 'Archived'
-        default:
-            return status
-    }
+export const mockAdminStats = {
+  pendingApplications: 3,
+  totalMembers: 127,
+  eventsThisMonth: 4,
+  messagesToday: 89,
 }

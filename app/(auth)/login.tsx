@@ -27,9 +27,11 @@ import { Ionicons } from '@expo/vector-icons'
 import { supabase } from '@/lib/supabase'
 import { track } from '@/lib/analytics'
 import { ACCENT, ACCENT_DIM, ACCENT_BORDER, BG, SURFACE, BORDER, ERROR, ERROR_DIM, TEXT_SECONDARY } from '@/lib/theme'
-import { APP_NAME, APP_SCHEME } from '@/lib/constants'
+import { APP_NAME } from '@/lib/constants'
 import { adjustBrightness } from '@/lib/utils'
 import { Fonts } from '@/lib/typography'
+
+const APP_SCHEME = 'velvet'
 
 // Required for OAuth session handling on Android
 WebBrowser.maybeCompleteAuthSession()

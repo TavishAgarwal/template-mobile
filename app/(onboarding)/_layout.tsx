@@ -1,10 +1,14 @@
 import { Stack } from 'expo-router'
-import { BG } from '@/lib/theme'
+import { BG_BASE } from '@/lib/theme'
 
 export default function OnboardingLayout() {
   return (
-    <Stack screenOptions={{ headerShown: false, animation: 'slide_from_right', contentStyle: { backgroundColor: BG } }}>
-      <Stack.Screen name="index" />
-    </Stack>
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: BG_BASE },
+        animation: 'slide_from_right',
+      }}
+    />
   )
 }

@@ -1,64 +1,65 @@
-/**
- * Tabs layout — add new tabs by:
- *   1. Create app/(tabs)/<name>.tsx
- *   2. Add a tabBarIcon and tabBarLabel in the <Tabs.Screen> below.
- *
- * The custom TabBar renders itself — its tab list is driven entirely by
- * the screens registered here.
- */
 import { Tabs } from 'expo-router'
-import { House, Compass, Bell, CircleUser } from 'lucide-react-native'
-import TabBar, { TAB_BAR_HEIGHT } from '@/components/TabBar'
-import { BG } from '@/lib/theme'
+import { View, StyleSheet, Platform } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { ACCENT, TAB_INACTIVE, BG_SURFACE, BORDER_DEFAULT, TAB_HEIGHT } from '@/lib/theme'
 
 export default function TabsLayout() {
+  const insets = useSafeAreaInsets()
+
   return (
     <Tabs
-      tabBar={(props) => <TabBar {...props} />}
       screenOptions={{
         headerShown: false,
-        sceneStyle: { backgroundColor: BG },
-        // Extra bottom padding so content clears the floating tab bar
-        tabBarStyle: { height: TAB_BAR_HEIGHT },
+        tabBarStyle: {
+          backgroundColor: BG_SURFACE,
+          borderTopWidth: 1,
+          borderTopColor: BORDER_DEFAULT,
+          height: TAB_HEIGHT + insets.bottom,
+          paddingTop: 8,
+        },
+        tabBarActiveTintColor: ACCENT,
+        tabBarInactiveTintColor: TAB_INACTIVE,
+        tabBarLabelStyle: {
+          fontSize: 10,
+          fontWeight: '600',
+          marginTop: 2,
+        },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <House size={size} color={color} strokeWidth={1.6} />
-          ),
+          title: 'Home',
+          tabBarIcon: ({ color, size }) => <Ionicons name="home-outline" size={size} color={color} />,
         }}
       />
-
       <Tabs.Screen
-        name="explore"
+        name="members"
         options={{
-          tabBarLabel: 'Explore',
-          tabBarIcon: ({ color, size }) => (
-            <Compass size={size} color={color} strokeWidth={1.6} />
-          ),
+          title: 'Members',
+          tabBarIcon: ({ color, size }) => <Ionicons name="people-outline" size={size} color={color} />,
         }}
       />
-
       <Tabs.Screen
-        name="activity"
+        name="events"
         options={{
-          tabBarLabel: 'Activity',
-          tabBarIcon: ({ color, size }) => (
-            <Bell size={size} color={color} strokeWidth={1.6} />
-          ),
+          title: 'Events',
+          tabBarIcon: ({ color, size }) => <Ionicons name="calendar-outline" size={size} color={color} />,
         }}
       />
-
+      <Tabs.Screen
+        name="messages"
+        options={{
+          title: 'Messages',
+          tabBarIcon: ({ color, size }) => <Ionicons name="chatbubble-outline" size={size} color={color} />,
+        }}
+      />
       <Tabs.Screen
         name="profile"
         options={{
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({ color, size }) => (
-            <CircleUser size={size} color={color} strokeWidth={1.6} />
-          ),
+          title: 'Profile',
+          tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} />,
         }}
       />
     </Tabs>
